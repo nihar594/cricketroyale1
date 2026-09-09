@@ -1,0 +1,12 @@
+# Tells Railway's Railpack/Nixpacks builder to install ffmpeg alongside
+# the Python environment it already sets up. ffmpeg provides ffprobe,
+# which utils/media.py uses to read each GIF/MP4's real width and height
+# so Telegram doesn't have to guess the aspect ratio (and sometimes guess
+# wrong) when rendering the animation preview in a group chat.
+#
+# Without this file the bot still runs fine -- ffprobe just won't be
+# found, and send_animation falls back to not specifying width/height
+# (Telegram's own default behavior, same as before this feature existed).
+
+[phases.setup]
+aptPkgs = ["ffmpeg"]
